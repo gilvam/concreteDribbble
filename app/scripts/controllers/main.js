@@ -7,11 +7,7 @@
  * # MainCtrl
  * Controller of the concreteDribbbleApp
  */
-angular.module('concreteDribbbleApp')
-  .controller('MainCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+angular.module('concreteDribbbleApp').controller('MainCtrl',['$scope', 'Dribbble', function ($scope, Dribbble) {
+  console.log('$scope: ', $scope);
+  console.log('Dribbble: ', Dribbble);
+}]);
