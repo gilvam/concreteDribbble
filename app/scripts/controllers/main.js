@@ -7,51 +7,65 @@
  * # MainCtrl
  * Controller of the concreteDribbbleApp
  */
-angular.module('concreteDribbbleApp').controller('MainCtrl',['$scope', '$routeParams', 'Dribbble', function ($scope, $routeParams, Dribbble) {
+angular.module('concreteDribbbleApp').controller('MainCtrl',['$scope','$rootScope', 'Dribbble',
+  function ($scope, $rootScope, Dribbble) {
 
-  //detalhe de um shot ativo
-  $scope.isDetails = false;
-  //ultimo detalhe de um shot ativo
-  var isDetailsOld = null;
+    $scope.isDetails = false;   //detalhe de um shot ativo
+    $scope.isDetailsOld = null; //ultimo detalhe de um shot ativo
+    $scope.loadingMore = true;  //desativa botao carregar mais quando nao existe mais shots a serem carregados
+    $scope.page = null;
+    $scope.per_page = 12;
 
-  $scope.page = null;
-  $scope.per_page = 12;
-  $scope.loadingMore = true;
-  $scope.isloaded = false;
-
-  $scope.loadingShots = function(){
-    console.log('loading');
-    $scope.page = $scope.page !== null ? $scope.page + 1 : 0;
-    $scope.shots = $scope.shots || [];
-
-    Dribbble.shots({page: $scope.page ,per_page: $scope.per_page, access_token: $scope.auth.clientAccessToken}, function(data){
-      if(data && data.length){
-        angular.forEach(data, function(shot){
-          //adiciona booleano de visualizacao dos detalhes de um shot
-          shot.isDetails = false;
-          //adiciona imagem de avatar pequeno
-          shot.user.avatar_url_mini = angular.copy(shot.user.avatar_url).toString().replace(/\/normal/gi, '/mini');
-          $scope.shots.push(shot);
-        });
+    /**
+     * funcao que desativa shot anterior se o mesmo shot nao receber um segundo clique
+     * @param index
+     */
+    $scope.disableShot = function(index){
+      if($scope.isDetailsOld !== null && $scope.isDetailsOld !== index){
+        $scope.shots[$scope.isDetailsOld].isDetails = false;
       }
-      else{
-        $scope.loadingMore = false;
-      }
-    });
-  };
-  $scope.loadingShots();
+    };
 
+    /**
+     * fucao que ativa ou desativar detalhes de um shot
+     * @param index
+     */
+    $scope.seeDetails = function(index){
+      //ativa ou desativa novo shot
+      $scope.shots[index].isDetails = !$scope.shots[index].isDetails;
+      $scope.disableShot(index);
+      //guarda shot recente
+      $scope.isDetailsOld = index;
+    };
 
-  //ativar desativar detalhes de um shot
-  $scope.seeDetails = function(index){
-    //ativa ou desativa novo shot
-    $scope.shots[index].isDetails = !$scope.shots[index].isDetails;
+    /**
+     * carrega os dados da API
+     */
+    $scope.loadingShots = function(){
+      //desativa detalhes de um shot se existe um aberto
+      $scope.disableShot(null);
+      $rootScope.isloaded = false;
+      $scope.page = $scope.page !== null ? $scope.page + 1 : 0;
+      $scope.shots = $scope.shots || [];
 
-    //desativa shot anterior se o mesmo shot nao receber um segundo clique
-    if(isDetailsOld !== null && isDetailsOld !== index){
-      $scope.shots[isDetailsOld].isDetails = false;
-    }
-    //guarda shot recente
-    isDetailsOld = index;
-  };
-}]);
+      //service
+      Dribbble.shots({page: $scope.page ,per_page: $scope.per_page, access_token: $scope.auth.clientAccessToken}, function(data){
+        if(data && data.length){
+          angular.forEach(data, function(shot){
+            //adiciona booleano de visualizacao dos detalhes de um shot
+            shot.isDetails = false;
+            //adiciona imagem de avatar pequeno
+            shot.user.avatar_url_mini = angular.copy(shot.user.avatar_url).toString().replace(/\/normal/gi, '/mini');
+            //adiciona os shot por shot
+            $scope.shots.push(shot);
+          });
+        }
+        else{
+          $scope.loadingMore = false;
+        }
+        $rootScope.isloaded = true;
+      });
+    };
+    $scope.loadingShots();
+
+  }]);

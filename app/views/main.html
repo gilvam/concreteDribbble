@@ -1,12 +1,11 @@
 <div class="shots-container">
   <ol class="shots">
-    <li ng-repeat="shot in shots track by $index" ng-click="seeDetails($index)">
+    <li ng-repeat="shot in shots track by $index" ng-click="seeDetails($index)" ng-animate="'animate'">
       <div class="shot">
         <img src="{{shot.images.teaser}}" alt="imagem de um shot">
-        <div class="shot-details" ng-class="{'active': shot.isDetails}">
-
+        <div class="shot-details" ng-show="shot.isDetails">
           <div class="user">
-            <img class="img-circle" src="{{shot.user.avatar_url_mini}}" alt="imagem de {{shot.user.name}}">
+            <img src="{{shot.user.avatar_url_mini}}" alt="imagem de {{shot.user.name}}">
             <span>{{shot.user.name}}</span>
           </div>
 
@@ -14,26 +13,26 @@
             <div class="comment" ng-bind-html="shot.description"></div>
             <em class="timestamp">{{shot.created_at | date:'dd/MM/yyyy HH:mm'}}</em>
           </div>
-
         </div>
-        <ul class="shot-social">
-          <li class="glyphicon glyphicon-eye-open">
-            <span>{{shot.views_count}}</span>
-          </li>
-          <li class="glyphicon glyphicon-comment">
-            <span>{{shot.comments_count}}</span>
-          </li>
-          <li class="glyphicon glyphicon-heart">
-            <span>{{ shot.likes_count}}</span>
-          </li>
-        </ul>
+        <div class="shot-social">
+          <ul ng-class="{'shot-social-animate': shot.isDetails}">
+            <li class="glyphicon glyphicon-eye-open">
+              <span>{{shot.views_count}}</span>
+            </li>
+            <li class="glyphicon glyphicon-comment">
+              <span>{{shot.comments_count}}</span>
+            </li>
+            <li class="glyphicon glyphicon-heart">
+              <span>{{ shot.likes_count}}</span>
+            </li>
+          </ul>
+        </div>
       </div>
     </li>
   </ol>
 
   <button class="btn btn-default" ng-click="loadingShots()" ng-if="loadingMore"> carregar mais...</button>
   <span ng-if="!loadingMore" class="end-list"> Você chegou ao final da lista</span>
-
 </div>
 
 <br>

@@ -1,0 +1,37 @@
+@mixin animate-ng-repeat-fade(){
+  @include transition(all linear 1s);
+
+  &.ng-enter {
+    opacity: 0;
+  }
+  &.ng-enter.ng-enter-active {
+    opacity: 1;
+  }
+  &.ng-leave {
+    opacity: 1;
+  }
+  &.ng-leave.ng-leave-active {
+    opacity: 0;
+  }
+}
+
+@mixin animate-ng-show-fade(){
+  &.ng-hide {
+    opacity: 0;
+  }
+
+  &.ng-hide-add,
+  &.ng-hide-remove {
+    @include transition(all linear 0.2s);
+  }
+}
+
+@mixin animate-shot-social(){
+  margin-left: 0px;
+  transition: all 0.5s ease-out;
+}
+@mixin animate-shot-social-active(){
+  margin-left: 35px;
+  transition: all 0.1s ease-out;
+}
+
