@@ -8,22 +8,17 @@
  * Factory in the concreteDribbbleApp.
  */
 angular.module('concreteDribbbleApp').factory('Dribbble', [ '$resource', function($resource) {
-  console.log('$resource: ', $resource);
-	return $resource('http://api.dribbble.comrest/Dribbbles/:action/:DribbbleId', {
+
+	return $resource('https://api.dribbble.com/v1/:action', {
 		action : ''
 	}, {
-		getPopular: {
+    shots: {
 			method : 'GET',
 			params : {
-				action: 'getDashboardInformation'
-			}
+				action: 'shots'
+			},
+      isArray: true
 		}
 	});
+
 } ]);
-
-
-
-
-
-// popular
-// https://dribbble.com/shots?page=2&per_page=12

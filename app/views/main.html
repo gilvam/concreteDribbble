@@ -1,23 +1,38 @@
-<div class="jumbotron">
-  <h1>'Allo, 'Allo!</h1>
-  <p class="lead">
-    <img src="images/yeoman.png" alt="I'm Yeoman"><br>
-    Always a pleasure scaffolding your apps.
-  </p>
-  <p><a class="btn btn-lg btn-success" ng-href="#/">Splendid!<span class="glyphicon glyphicon-ok"></span></a></p>
+<div>
+  <div class="shots-container">
+    <ol class="shots">
+      <li ng-repeat="shot in shots track by $index" ng-click="seeDetails($index)">
+        <div class="shot">
+          <img src="{{shot.images.teaser}}" alt="imagem de um shot">
+          <div class="shot-details" ng-class="{'active': shot.isDetails}">
+
+            <div class="user">
+              <img class="img-circle" src="{{shot.user.avatar_url_mini}}" alt="imagem de {{shot.user.name}}">
+              <span>{{shot.user.name}}</span>
+            </div>
+
+            <div class="details">
+              <div class="comment" ng-bind-html="shot.description"></div>
+              <em class="timestamp">{{shot.created_at | date:'dd/MM/yyyy HH:mm'}}</em>
+            </div>
+
+          </div>
+          <ul class="shot-social">
+            <li class="glyphicon glyphicon-eye-open">
+              <span>{{shot.views_count}}</span>
+            </li>
+            <li class="glyphicon glyphicon-comment">
+              <span>{{shot.comments_count}}</span>
+            </li>
+            <li class="glyphicon glyphicon-heart">
+              <span>{{ shot.likes_count}}</span>
+            </li>
+          </ul>
+        </div>
+
+      </li>
+    </ol>
+
+  </div>
 </div>
 
-<div class="row marketing">
-  <h4>HTML5 Boilerplate</h4>
-  <p>
-    HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.
-  </p>
-
-  <h4>Angular</h4>
-  <p>
-    AngularJS is a toolset for building the framework most suited to your application development.
-  </p>
-
-  <h4>Karma</h4>
-  <p>Spectacular Test Runner for JavaScript.</p>
-</div>
