@@ -14,19 +14,33 @@ angular.module('concreteDribbbleApp').controller('MainCtrl',['$scope', '$routePa
   //ultimo detalhe de um shot ativo
   var isDetailsOld = null;
 
-  $scope.page = 0;
-  $scope.per_page = 4;
+  $scope.page = null;
+  $scope.per_page = 12;
+  $scope.loadingMore = true;
+  $scope.isloaded = false;
 
-  Dribbble.shots({page: $scope.page ,per_page: $scope.per_page, access_token: $scope.auth.clientAccessToken}, function(data){
-    $scope.shots = data;
-    $scope.shots.map(function(shot){
-      //adiciona booleano de visualizacao dos detalhes de um shot
-      shot.isDetails = false;
-      //adiciona imagem de avatar pequeno
-      shot.user.avatar_url_mini = angular.copy(shot.user.avatar_url).toString().replace(/\/normal/gi, '/mini');
-      return shot;
+  $scope.loadingShots = function(){
+    console.log('loading');
+    $scope.page = $scope.page !== null ? $scope.page + 1 : 0;
+    $scope.shots = $scope.shots || [];
+
+    Dribbble.shots({page: $scope.page ,per_page: $scope.per_page, access_token: $scope.auth.clientAccessToken}, function(data){
+      if(data && data.length){
+        angular.forEach(data, function(shot){
+          //adiciona booleano de visualizacao dos detalhes de um shot
+          shot.isDetails = false;
+          //adiciona imagem de avatar pequeno
+          shot.user.avatar_url_mini = angular.copy(shot.user.avatar_url).toString().replace(/\/normal/gi, '/mini');
+          $scope.shots.push(shot);
+        });
+      }
+      else{
+        $scope.loadingMore = false;
+      }
     });
-  });
+  };
+  $scope.loadingShots();
+
 
   //ativar desativar detalhes de um shot
   $scope.seeDetails = function(index){
@@ -40,7 +54,4 @@ angular.module('concreteDribbbleApp').controller('MainCtrl',['$scope', '$routePa
     //guarda shot recente
     isDetailsOld = index;
   };
-
-
-
 }]);
