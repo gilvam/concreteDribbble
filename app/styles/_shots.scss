@@ -21,9 +21,10 @@
 
     &:hover{
       cursor: pointer;
+      @include box-shadow(1px 1px 6px 1px rgba(0,0,0,0.55));
     }
     >img{
-      border-bottom: 1px solid $body-backgroud-color;
+      border-bottom: 1px solid #dadada;
     }
 
     .shot-details{
