@@ -1,5 +1,6 @@
 .shots-container{
   text-align: center;
+  margin-bottom: 30px;
 
   ol{
     &.shots{
@@ -7,8 +8,9 @@
 
       >li{
         display: inline-block;
-        padding: $shot-width-extra;
-        width: $shot-width + $shot-width-extra*2;
+        padding: $shot-width-extra auto;
+        margin: 20px;
+        width: $shot-width;
         @include animate-ng-repeat-fade();
       }
     }
@@ -20,6 +22,9 @@
     &:hover{
       cursor: pointer;
     }
+    >img{
+      border-bottom: 1px solid $body-backgroud-color;
+    }
 
     .shot-details{
       text-align: left;
@@ -29,6 +34,7 @@
       padding: 36px 10px 10px 10px;
       width: $shot-width + $shot-width-extra*2;
       border-top: 1px solid rgba(48, 63, 69, 0.1);
+      margin-bottom: 30px; //garante que o ultimo shot em um dispositivo pequeno possa ser lido totalmente
       z-index: 101;
 
       @include box-shadow(-1px 1px 4px 0px rgba(0,0,0,0.55));
@@ -88,7 +94,6 @@
         padding: 7px;
         position: absolute;
         width: $shot-width;
-        border-top: 1px solid $body-backgroud-color;
         @include animate-shot-social();
 
         &.shot-social-animate{

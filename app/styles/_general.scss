@@ -1,5 +1,16 @@
 body{
-  background-color: $body-backgroud-color;
+  background-color: #222;
+
+  > .container-fluid{
+    padding-left: 0px;
+    padding-right: 0px;
+
+    background-color: $body-backgroud-color;
+    background-image: url("../images/bg-fabric-of-squares.png");
+  }
 }
 
+.navbar{
+  margin-bottom: 0px;
+}
 
