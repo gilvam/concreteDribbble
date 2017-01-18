@@ -2,10 +2,12 @@
   <ol class="shots">
     <li ng-repeat="shot in shots track by $index" ng-click="seeDetails($index)" ng-animate="'animate'">
       <div class="shot">
-        <img src="{{shot.images.teaser}}" alt="imagem de um shot">
+        <!--<img src="{{shot.images.teaser}}" alt="imagem de um shot">-->
+        <div class="shot-img" ng-style="{'background-image': 'url({{ shot.images.teaser }})'}"></div>
         <div class="shot-details" ng-show="shot.isDetails">
           <div class="user">
-            <img src="{{shot.user.avatar_url_mini}}" alt="imagem de {{shot.user.name}}">
+            <!--<img src="{{shot.user.avatar_url_mini}}" alt="imagem de {{shot.user.name}}">-->
+            <div class="user-img" ng-style="{'background-image': 'url({{ shot.user.avatar_url_mini }})'}"></div>
             <span>{{shot.user.name}}</span>
           </div>
 

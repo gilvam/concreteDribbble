@@ -23,8 +23,10 @@
       cursor: pointer;
       @include box-shadow(1px 1px 6px 1px rgba(0,0,0,0.55));
     }
-    >img{
+    >.shot-img{
       border-bottom: 1px solid #dadada;
+      width: 200px;
+      height: 150px;
     }
 
     .shot-details{
@@ -62,10 +64,14 @@
       }
 
       .user{
-        >img{
+        >.user-img{
           border: 1px solid white;
           background-color: white;
-          width: 30px;
+          width: 34px;
+          height: 34px;
+          position: absolute;
+
+          background-repeat: no-repeat;
         }
         >span{
           margin-left: 4px;
