@@ -39,6 +39,7 @@
       border-top: 1px solid rgba(48, 63, 69, 0.1);
       margin-bottom: 30px; //garante que o ultimo shot em um dispositivo pequeno possa ser lido totalmente
       z-index: 101;
+      word-break: break-all;
 
       @include box-shadow(-1px 1px 4px 0px rgba(0,0,0,0.55));
 
@@ -74,7 +75,8 @@
           background-repeat: no-repeat;
         }
         >span{
-          margin-left: 4px;
+          padding: 6px 0px 0px 38px;
+          display: inherit;
         }
       }
       .details{
